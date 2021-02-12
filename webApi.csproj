@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Sinks.Splunk" Version="3.6.0" />
+    <PackageReference Include="Serilog.Sinks.AzureEventHub" Version="5.0.0" />
   </ItemGroup>
 
 
