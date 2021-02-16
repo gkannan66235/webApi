@@ -19,8 +19,8 @@ namespace webApi
         {
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
-                .WriteTo.Console(
-                    outputTemplate: "[{Timestamp:HH:mm:ss} {CorrelationId} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
+                //.WriteTo.Console(
+                //    outputTemplate: "[{Timestamp:HH:mm:ss} {CorrelationId} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
                 .Enrich.WithCorrelationId()
                 .Enrich.FromLogContext()
                 .CreateLogger();
