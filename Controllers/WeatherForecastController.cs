@@ -25,7 +25,8 @@ namespace webApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            _logger.LogInformation("called weather forecast");
+            var CliamId = "az500"; // sample claim id 
+            _logger.LogInformation("called claim {CliamId}", CliamId);
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
