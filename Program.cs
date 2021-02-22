@@ -4,20 +4,28 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Formatting.Compact;
 
 namespace webApi
 {
     public class Program
     {
+        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                            .Enrich.FromLogContext()
-                            //.WriteTo.Console(new RenderedCompactJsonFormatter())
-                            .WriteTo.Console(
-                                    outputTemplate: "[{Timestamp:HH:mm:ss} {CorrelationId} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
-                            .CreateLogger();
+                        .ReadFrom.Configuration(Configuration)
+                        //.Enrich.FromLogContext()
+                        //.WriteTo.Console(new RenderedCompactJsonFormatter())
+                        //.WriteTo.Console(
+                        //        outputTemplate: "[{Timestamp:HH:mm:ss} {CorrelationId} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
+                        //.WriteTo.EventCollector("", "f53be05e-ff00-44fa-800d-b46eb8fea81b")
+                        .CreateLogger();
             CreateHostBuilder(args).Build().Run();
 
             try
